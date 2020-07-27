@@ -1,0 +1,139 @@
+<?php
+/** @var \app\models\Product $product */
+
+use app\models\Menu\MenuCategory;
+use app\components\UrlHelper;
+use app\models\Product;
+use app\components\JustHelper;
+?>
+<!-- Elements-item start -->
+<div class="e_item wow pulse" data-wow-duration="1s">
+
+    <?php if ($product->free != null) : ?>
+
+    <a class="bonus-pizza" href="<?= UrlHelper::urlToProduct($product) ?>">
+        <div class="bonus-pizza__circle"></div>
+        <div class="bonus-pizza__text">
+            <div class="bonus-pizza__text1"><?=Yii::t('layout', 'Маленькая')?></div>
+            <div class="bonus-pizza__text2"><?=Yii::t('layout', 'пицца в')?></div>
+            <div class="bonus-pizza__text3"><?=Yii::t('layout', 'подарок!')?></div>
+        </div>
+        <div class="bonus-pizza__cross"></div>
+    </a>
+
+    <?php endif ?>
+    
+    <?php if($product->is_image){ ?>
+    <p class="e_item-cry"><?= $product->description; ?></p>
+    <?php } ?>
+    <?php if($product->is_image){ ?>
+    <?php if ($product->hasImage()): ?>
+    <a href="<?= UrlHelper::urlToProduct($product) ?>" class="e_item-say">
+<!--        <span class="e_item-unite__container">-->
+            <img class="e_item-unite" src="<?=$product->getImageUrl()?>" alt="">
+<!--        </span>-->
+    </a>
+    <?php endif ?>
+    <?php } ?>
+    <div class="e_item-tie"<?php if ($product->menu_category_id == MenuCategory::CAT_PIZZA_ID) : ?> style="padding-top: 1.20em;"<?php endif ?>>
+        <?php if ($product->menu_category_id != MenuCategory::CAT_PIZZA_ID) : ?>
+        <div class="href" ref="<?= UrlHelper::urlToProduct($product) ?>">
+        <?php endif ?>
+            <div class="e_item-note<?= $product->menu_category_id != MenuCategory::CAT_PIZZA_ID ? ' e_item-note__extented' : '' ?>">
+                <a href="<?= UrlHelper::urlToProduct($product) ?>" class="e_item-refer"><?= $product->name ?></a>
+            <!--            <i class="e_icon e_icon-info e_item-show-info"></i>-->
+                <?php if ($product->menu_category_id != MenuCategory::CAT_PIZZA_ID): ?>
+                    <div class="e_item-guide">
+                        <span class="e_item-txt"><?= $product->weight_data[Product::KEY_COMMON] ?> <?= Product::getWeightValue($product->menu_category_id) ?></span>
+                        <span class="e_item-sector2"><?= $product->price_data[Product::KEY_COMMON] ?> <?= Yii::t('layout', 'грн') ?></span>
+                    </div>
+                <?php endif ?>
+            </div>
+            <div class="e_item-note-group">
+                    <?php if ($product->menu_category_id == MenuCategory::CAT_PIZZA_ID): ?>
+                        <div class="list_pizza__40">
+                            <a data-product_id="<?= $product->id ?>" class="list_pizza_40 active" href="#">
+                                <span class="list_size_value">40 <?= Yii::t('layout', 'см') ?></span>
+                                <span class="list_price_value"><?= $product->weight_data[Product::KEY_40] ?> <?= Yii::t('layout', 'гр') ?></span>
+                                <?php if ($product->free != null) : ?>
+                                    <img src="/front/img/icons/cross_orange.png" alt="">
+                                <?php endif ?>
+                            </a>
+                            <span class="e_item-sector active" data-product_id="<?= $product->id ?>" data-size="40"><?= $product->price_data[Product::KEY_40] ?> <?= Yii::t('layout', 'грн') ?></span>
+                        </div>
+                        <div class="list_pizza__30">
+                            <a data-product_id="<?= $product->id ?>" class="list_pizza_30" href="#">
+                                <span class="list_size_value">30 <?= Yii::t('layout', 'см') ?></span>
+                                <span class="list_price_value"><?= $product->weight_data[Product::KEY_30] ?> <?= Yii::t('layout', 'гр') ?></span>
+                            </a>
+                            <span class="e_item-sector" data-product_id="<?= $product->id ?>" data-size="30"><?= $product->price_data[Product::KEY_30] ?> <?= Yii::t('layout', 'грн') ?></span>
+                        </div>
+                        <div class="list_pizza__20">
+                            <a data-product_id="<?= $product->id ?>" class="list_pizza_20" href="#">
+                                <span class="list_size_value">25 <?= Yii::t('layout', 'см') ?></span>
+                                <span class="list_price_value"><?= $product->weight_data[Product::KEY_20] ?> <?= Yii::t('layout', 'гр') ?></span>
+                            </a>
+                            <span class="e_item-sector" data-product_id="<?= $product->id ?>" data-size="20"><?= $product->price_data[Product::KEY_20] ?> <?= Yii::t('layout', 'грн') ?></span>
+                        </div>
+                    <?php else: ?>
+                    <div class="e_item-category-icon">
+                        <?php if(!$product->icon){ ?>
+                                <?= JustHelper::getITagByCategoryId($product->menu_category_id) ?>
+                                <?php }else{ ?>
+                                 <img class="e_icon" src="<?php echo $product->icon; ?>">
+                                <?php } ?>
+                            </div>
+                    <?php endif; ?>
+                </div>
+                <?php if ($product->menu_category_id != MenuCategory::CAT_PIZZA_ID) : ?>
+        </div>
+        <?php endif ?>
+            <div class="e_item-utter">
+                <?php if ($product->menu_category_id == MenuCategory::CAT_PIZZA_ID): ?>
+                    <div class="product-list-order-btn-wrap" data-product_id="<?= $product->id ?>" data-size="40" style="width: 100%;">
+                            
+                        <button class="btn-motto btn product-list-order-btn menucat-order"
+                                data-product_id="<?= $product->id ?>"
+                                data-model_size="<?= Product::KEY_40 ?>"
+                                data-price="<?= $product->price_data[Product::KEY_40] ?>"
+                                data-weight="<?= $product->weight_data[Product::KEY_40] ?>"
+                        ><?= Yii::t('order', 'Заказать')?>
+                        </button>
+                        
+                    </div>
+                            <div class="product-list-order-btn-wrap" data-product_id="<?= $product->id ?>" data-size="30" style="display: none; width: 100%;">
+                             
+                        <button class="btn-motto btn product-list-order-btn menucat-order"
+                                data-product_id="<?= $product->id ?>"
+                                data-model_size="<?= Product::KEY_30 ?>"
+                                data-price="<?= $product->price_data[Product::KEY_30] ?>"
+                                data-weight="<?= $product->weight_data[Product::KEY_30] ?>"
+                        ><?= Yii::t('order', 'Заказать')?>
+                        </button>
+                       
+                    </div>
+                    <div class="product-list-order-btn-wrap" data-product_id="<?= $product->id ?>" data-size="20" style="display: none; width: 100%;">
+                     
+                        <button class="btn-motto btn product-list-order-btn menucat-order"
+                                data-product_id="<?= $product->id ?>"
+                                data-model_size="<?= Product::KEY_20 ?>"
+                                data-price="<?= $product->price_data[Product::KEY_20] ?>"
+                                data-weight="<?= $product->weight_data[Product::KEY_20] ?>"
+                        ><?= Yii::t('order', 'Заказать')?>
+                        </button>
+                       
+                    </div>
+                <?php else: ?>
+                    <button class="btn-motto btn product-list-order-btn menucat-order"
+                            data-product_id="<?= $product->id ?>"
+                            data-model_size="<?= Product::KEY_COMMON ?>"
+                            data-price="<?= $product->price_data[Product::KEY_COMMON] ?>"
+                            data-weight="<?= $product->weight_data[Product::KEY_COMMON] ?>"
+                    ><?= !isset($_SESSION['order'][$product->id.'_price__']) ? Yii::t('order', 'Заказать') : Yii::t('order', 'Добавить еще один')?>
+                    </button>
+                <?php endif; ?>
+            </div>
+
+    </div>
+</div>
+<!-- Elements-item end -->
